@@ -1,7 +1,6 @@
 // @flow
 import * as React from 'react';
-import {CardContent, Grid, IconButton, TableCell, Typography} from "@mui/material";
-import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
+import {Grid, IconButton, TableCell} from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
@@ -75,8 +74,7 @@ const TaskScreenList = ({tasks}: TravelIndexProp): JSX.Element => {
     return (
         <>
             {
-                tasks.length < 1 ?
-                    <div style={{textAlign: "center"}}><p>Results not found.</p></div> : displayTasks(tasks)
+                tasks.length < 1 ? <div style={{textAlign: "center"}}><p>Results not found.</p></div> : displayTasks(tasks)
             }
         </>
     );

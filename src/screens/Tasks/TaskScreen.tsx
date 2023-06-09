@@ -2,18 +2,21 @@ import * as React from 'react';
 import TaskScreenList from "./TaskScreenList";
 import {useEffect, useState} from "react";
 import axios from "axios";
-import {Box} from "@mui/material";
+import {Box, IconButton} from "@mui/material";
+import {config} from "../../config";
+import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
+import TaskDialog from "./TaskDialog";
 
-const TaskScreen = () => {
+const TaskScreen = (): JSX.Element => {
     const[tasks, setTasks] = useState({});
-
-    // I need to do this since the exam was given to me so late
-    axios.defaults.baseURL = 'http://localhost:8000';
+    const[show, setShowDialog] = useState<boolean>(false);
+    const[task, setTask] = useState({});
+    const[actionFilter, setActionFilter] = useState<boolean>(false);
 
     useEffect(() => {
         const fetchTasks = async () => {
             try {
-                const document = await axios.get(`/task-management/tasks`);
+                const document = await axios.get(`${config.apiBaseUrl}/tasks`);
                 const {data} = document;
                 setTasks(data.data)
             } catch (err: any) {
@@ -24,6 +27,21 @@ const TaskScreen = () => {
         fetchTasks();
     }, []);
 
+    const onAddClick = () => {
+        setShowDialog(true);
+
+        // True if add/post action
+        setActionFilter(true);
+    };
+
+    const onEditClick = (task: {}) => {
+        setTask(task);
+        setShowDialog(true);
+
+        // False if edit/patch action
+        setActionFilter(false);
+    }
+
     return (
         <Box sx={{
                 display: 'flex',
@@ -32,7 +50,11 @@ const TaskScreen = () => {
                 flexDirection: 'column'
             }}>
             <h2>Task List</h2>
+            <IconButton aria-label="add" onClick={onAddClick}>
+                <AddCircleRoundedIcon color="primary"/>
+            </IconButton>
             <TaskScreenList tasks={tasks}/>
+            <TaskDialog show={show} setShowDialog={setShowDialog} actionFilter={actionFilter}/>
         </Box>
     );
 };

@@ -1,6 +1,6 @@
 import * as React from 'react';
-import {Box, Button, DialogContent, TextField} from "@mui/material";
-import {Dispatch, useState} from "react";
+import {Box, Button, DialogContent, Select, TextField} from "@mui/material";
+import {Dispatch, useEffect, useState} from "react";
 import axios from "axios";
 import {config} from "../../config";
 
@@ -8,14 +8,36 @@ type TaskFormType = {
     actionFilter: boolean;
     setShowDialog: Dispatch<React.SetStateAction<boolean>>;
     appendTask: (val: {}) => void;
+    task: Task;
+    setTask: Dispatch<React.SetStateAction<Task | null>>;
 }
-const TaskForm = ({actionFilter, setShowDialog, appendTask}: TaskFormType): JSX.Element => {
-    const[taskName, setTaskName] = useState<string>("");
-    const[processing, setProcessing] = useState<boolean>(false);
+
+const TaskForm = ({actionFilter, setShowDialog, appendTask, task, setTask}: TaskFormType): JSX.Element => {
+    const {attributes} = task;
+    const {name} = attributes;
+    const[isProcessing, setProcessing] = useState<boolean>(false);
+    const[tasks, setTasks] = useState<string>("");
 
     const handleFormChange = (e: React.ChangeEvent<HTMLFormElement>): void => {
         e.preventDefault();
-        setTaskName(e.target.value);
+
+        // Quick fix
+        if (e.target.name === "name") {
+            setTask({...task, attributes: { name: e.target.value}})
+        } else {
+            setTask({...task, relationships: { statuses: e.target.value}})
+        }
+    };
+
+    useEffect(() => {
+        // Clear task during unmounting
+        return () => {
+            clearTask();
+        }
+    }, []);
+
+    const clearTask = (): void => {
+        setTask({...task, attributes: { name: ""}})
     };
 
     const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>): void => {
@@ -31,7 +53,7 @@ const TaskForm = ({actionFilter, setShowDialog, appendTask}: TaskFormType): JSX.
 
     const postRequest = async () => {
         const request = {
-            name: taskName,
+            name: name,
             status_id: 1
         }
 
@@ -59,13 +81,23 @@ const TaskForm = ({actionFilter, setShowDialog, appendTask}: TaskFormType): JSX.
                     margin="normal"
                     required
                     fullWidth
-                    id="taskName"
                     label="Task"
-                    name="taskName"
+                    id="name"
+                    name="name"
                     autoFocus
-                    value={taskName}
+                    value={name}
+                    disabled={isProcessing}
                 />
-                <Button type="submit" fullWidth variant="contained" sx={{mt: 3, mb: 2}}>
+                {
+                    !actionFilter &&
+                    <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        label="Status"
+                    >
+                    </Select>
+                }
+                <Button type="submit" fullWidth variant="contained" sx={{mt: 3, mb: 2}} disabled={isProcessing}>
                     Add Task
                 </Button>
             </Box>

@@ -56,15 +56,7 @@ const displayTasks = ({tasks, onEditClick, onDeleteClick}: TravelIndexProp): JSX
     )
 }
 
-const TaskScreenList = ({tasks}: TravelIndexProp): JSX.Element => {
-    const onEditClick = () => {
-
-    };
-
-    const onDeleteClick = () => {
-
-    };
-
+const TaskScreenList = ({tasks, onEditClick, onDeleteClick}: TravelIndexProp): JSX.Element => {
     return (
         <>
             {

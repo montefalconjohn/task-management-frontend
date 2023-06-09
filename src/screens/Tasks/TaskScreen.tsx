@@ -10,7 +10,21 @@ import TaskDialog from "./TaskDialog";
 const TaskScreen = (): JSX.Element => {
     const[tasks, setTasks] = useState({});
     const[show, setShowDialog] = useState<boolean>(false);
-    const[task, setTask] = useState<Task | {}> ({});
+    const [task, setTask] = useState<Task>(
+        {
+            id: "",
+            attributes: {
+                name: ""
+            },
+            relationships: {
+                statuses: {
+                    attributes: {
+                        statusName: ""
+                    }
+                }
+            }
+        }
+    );
     const[actionFilter, setActionFilter] = useState<boolean>(false);
 
     useEffect(() => {
@@ -27,14 +41,14 @@ const TaskScreen = (): JSX.Element => {
         fetchTasks();
     }, []);
 
-    const onAddClick = () => {
+    const onAddClick = (): void => {
         setShowDialog(true);
 
         // True if add/post action
         setActionFilter(true);
     };
 
-    const onEditClick = (task: {}) => {
+    const onEditClick = (task: Task): void => {
         setTask(task);
         setShowDialog(true);
 
@@ -42,7 +56,7 @@ const TaskScreen = (): JSX.Element => {
         setActionFilter(false);
     }
 
-    const onDeleteClick = () => {
+    const onDeleteClick = (): void => {
 
     }
 
@@ -67,6 +81,8 @@ const TaskScreen = (): JSX.Element => {
                 setShowDialog={setShowDialog}
                 actionFilter={actionFilter}
                 appendTask={appendTask}
+                task={task}
+                setTask={setTask}
             />
         </Box>
     );

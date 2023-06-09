@@ -8,9 +8,21 @@ type TaskDialogProps = {
     setShowDialog: Dispatch<React.SetStateAction<boolean>>;
     actionFilter: boolean;
     appendTask: (val: {}) => void;
+    task: Task;
+    setTask: Dispatch<React.SetStateAction<Task | null>>;
 }
 
-const TaskDialog = ({show, setShowDialog, actionFilter, appendTask}: TaskDialogProps): JSX.Element => {
+const TaskDialog = (
+    {
+        show,
+        setShowDialog,
+        actionFilter,
+        appendTask,
+        task,
+        setTask
+    }
+    : TaskDialogProps
+): JSX.Element => {
     let action = actionFilter ? "Add" : "Edit";
     return (
         <Dialog open={show} onClose={() => setShowDialog(false)} fullWidth>
@@ -19,6 +31,8 @@ const TaskDialog = ({show, setShowDialog, actionFilter, appendTask}: TaskDialogP
                 actionFilter={actionFilter}
                 setShowDialog={setShowDialog}
                 appendTask={appendTask}
+                setTask={setTask}
+                task={task}
             />
         </Dialog>
     );

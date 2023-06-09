@@ -10,20 +10,6 @@ type TravelIndexProp = {
     onDeleteClick: () => void;
 }
 
-type ItemProps = {
-    id: string;
-    attributes: {
-        name: string
-    };
-    relationships: {
-        statuses: {
-            attributes: {
-                statusName: string
-            }
-        }
-    };
-}
-
 const displayTasks = ({tasks, onEditClick, onDeleteClick}: TravelIndexProp): JSX.Element => {
     return (
         <>
@@ -33,12 +19,12 @@ const displayTasks = ({tasks, onEditClick, onDeleteClick}: TravelIndexProp): JSX
                         <TableHead>
                             <TableRow>
                                 <TableCell>Task</TableCell>
-                                <TableCell colSpan={3}>Task</TableCell>
+                                <TableCell colSpan={3}>Status</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             {
-                                tasks.length >= 1 && tasks.map((item: ItemProps, index) => {
+                                tasks.length >= 1 && tasks.map((item: Task, index) => {
                                         return (
                                             <TableRow key={item.id}>
                                                     <>

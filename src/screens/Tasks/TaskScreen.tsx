@@ -10,7 +10,7 @@ import TaskDialog from "./TaskDialog";
 const TaskScreen = (): JSX.Element => {
     const[tasks, setTasks] = useState({});
     const[show, setShowDialog] = useState<boolean>(false);
-    const[task, setTask] = useState({});
+    const[task, setTask] = useState<Task | {}> ({});
     const[actionFilter, setActionFilter] = useState<boolean>(false);
 
     useEffect(() => {
@@ -42,6 +42,14 @@ const TaskScreen = (): JSX.Element => {
         setActionFilter(false);
     }
 
+    const onDeleteClick = () => {
+
+    }
+
+    const appendTask = (value: {}): void => {
+        setTasks([...tasks, value]);
+    };
+
     return (
         <Box sx={{
                 display: 'flex',
@@ -53,8 +61,13 @@ const TaskScreen = (): JSX.Element => {
             <IconButton aria-label="add" onClick={onAddClick}>
                 <AddCircleRoundedIcon color="primary"/>
             </IconButton>
-            <TaskScreenList tasks={tasks}/>
-            <TaskDialog show={show} setShowDialog={setShowDialog} actionFilter={actionFilter}/>
+            <TaskScreenList tasks={tasks} onDeleteClick={onDeleteClick} onEditClick={onEditClick}/>
+            <TaskDialog
+                show={show}
+                setShowDialog={setShowDialog}
+                actionFilter={actionFilter}
+                appendTask={appendTask}
+            />
         </Box>
     );
 };

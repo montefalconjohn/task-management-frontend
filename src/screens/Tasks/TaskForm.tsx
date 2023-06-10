@@ -1,10 +1,10 @@
 import * as React from 'react';
-import {Box, Button, DialogContent, Select, TextField} from "@mui/material";
+import {Box, Button, DialogContent, MenuItem, OutlinedInput, Select, TextField} from "@mui/material";
 import {Dispatch, useEffect, useState} from "react";
 import axios from "axios";
 import {config} from "../../config";
 import taskDefaultValue, {Task} from "../../services/models/Task";
-import {Status} from "../../services/models/Status";
+import statusDefaultValue, {Status} from "../../services/models/Status";
 
 type TaskFormType = {
     actionFilter: boolean;
@@ -18,7 +18,7 @@ const TaskForm = ({actionFilter, setShowDialog, appendTask, task, setTask}: Task
     const {attributes} = task;
     const {name} = attributes;
     const[isProcessing, setProcessing] = useState<boolean>(false);
-    const[statuses, setStatuses] = useState<Status>("");
+    const[statuses, setStatuses] = useState<Status[]>([]);
 
     const handleFormChange = (e: React.ChangeEvent<HTMLFormElement>): void => {
         e.preventDefault();
@@ -31,11 +31,26 @@ const TaskForm = ({actionFilter, setShowDialog, appendTask, task, setTask}: Task
         }
     };
 
+    // Clear task during unmounting
     useEffect(() => {
-        // Clear task during unmounting
         return () => {
             setTask(taskDefaultValue())
         }
+    }, []);
+
+    // componentDidMount
+    useEffect(() => {
+        const fetchStatuses = async () => {
+            try {
+                const document = await axios.get(`${config.apiBaseUrl}/statuses`);
+                const {data} = document;
+                setStatuses(data.data)
+            } catch (err: any) {
+                throw err;
+            }
+        };
+
+        !actionFilter && fetchStatuses();
     }, []);
 
     const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>): void => {
@@ -92,8 +107,22 @@ const TaskForm = ({actionFilter, setShowDialog, appendTask, task, setTask}: Task
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
                         label="Status"
-                        maxWidth
+                        fullWidth
+                        input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+                        sx={{mt: 1}}
                     >
+                        {
+                            statuses.map(({id, attributes: {statusName}} = status) => {
+                                return (
+                                    <MenuItem
+                                        key={id}
+                                        value={statusName}
+                                    >
+                                        {statusName}
+                                    </MenuItem>
+                                );
+                            })
+                        }
                     </Select>
                 }
                 <Button type="submit" fullWidth variant="contained" sx={{mt: 3, mb: 2}} disabled={isProcessing}>

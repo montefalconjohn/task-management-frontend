@@ -7,26 +7,29 @@ import {config} from "../../config";
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import TaskDialog from "./TaskDialog";
 
-const TaskScreen = (): JSX.Element => {
-    const[tasks, setTasks] = useState({});
-    const[show, setShowDialog] = useState<boolean>(false);
-    const [task, setTask] = useState<Task>(
-        {
-            id: "",
-            attributes: {
-                name: ""
-            },
-            relationships: {
-                statuses: {
-                    attributes: {
-                        statusName: ""
-                    }
+const defaultValue = () => {
+    return {
+        id: "",
+        attributes: {
+            name: ""
+        },
+        relationships: {
+            statuses: {
+                attributes: {
+                    statusName: ""
                 }
             }
         }
-    );
+    }
+};
+
+const TaskScreen = (): JSX.Element => {
+    const[tasks, setTasks] = useState({});
+    const[show, setShowDialog] = useState<boolean>(false);
+    const[task, setTask] = useState<Task>(defaultValue());
     const[actionFilter, setActionFilter] = useState<boolean>(false);
 
+    console.log(task)
     useEffect(() => {
         const fetchTasks = async () => {
             try {

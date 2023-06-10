@@ -3,6 +3,7 @@ import {Box, Button, DialogContent, Select, TextField} from "@mui/material";
 import {Dispatch, useEffect, useState} from "react";
 import axios from "axios";
 import {config} from "../../config";
+import taskDefaultValue from "../../services/models/Task";
 
 type TaskFormType = {
     actionFilter: boolean;
@@ -32,13 +33,9 @@ const TaskForm = ({actionFilter, setShowDialog, appendTask, task, setTask}: Task
     useEffect(() => {
         // Clear task during unmounting
         return () => {
-            clearTask();
+            setTask(taskDefaultValue())
         }
     }, []);
-
-    const clearTask = (): void => {
-        setTask({...task, attributes: { name: ""}})
-    };
 
     const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>): void => {
         e.preventDefault();

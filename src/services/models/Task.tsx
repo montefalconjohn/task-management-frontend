@@ -11,3 +11,21 @@ type Task = {
         }
     };
 }
+
+const taskDefaultValue = () => {
+    return {
+        id: "",
+        attributes: {
+            name: ""
+        },
+        relationships: {
+            statuses: {
+                attributes: {
+                    statusName: ""
+                }
+            }
+        }
+    }
+};
+
+export default taskDefaultValue;

@@ -3,7 +3,8 @@ import {Box, Button, DialogContent, Select, TextField} from "@mui/material";
 import {Dispatch, useEffect, useState} from "react";
 import axios from "axios";
 import {config} from "../../config";
-import taskDefaultValue from "../../services/models/Task";
+import taskDefaultValue, {Task} from "../../services/models/Task";
+import {Status} from "../../services/models/Status";
 
 type TaskFormType = {
     actionFilter: boolean;
@@ -17,7 +18,7 @@ const TaskForm = ({actionFilter, setShowDialog, appendTask, task, setTask}: Task
     const {attributes} = task;
     const {name} = attributes;
     const[isProcessing, setProcessing] = useState<boolean>(false);
-    const[tasks, setTasks] = useState<string>("");
+    const[statuses, setStatuses] = useState<Status>("");
 
     const handleFormChange = (e: React.ChangeEvent<HTMLFormElement>): void => {
         e.preventDefault();
@@ -68,7 +69,7 @@ const TaskForm = ({actionFilter, setShowDialog, appendTask, task, setTask}: Task
     };
 
     const patchRequest = async () => {
-
+        console.log(task)
     };
 
     return (
@@ -91,6 +92,7 @@ const TaskForm = ({actionFilter, setShowDialog, appendTask, task, setTask}: Task
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
                         label="Status"
+                        maxWidth
                     >
                     </Select>
                 }

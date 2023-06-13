@@ -15,8 +15,10 @@ type TaskFormType = {
 }
 
 const TaskForm = ({actionFilter, setShowDialog, appendTask, task, setTask}: TaskFormType): JSX.Element => {
-    const {attributes} = task;
+    const {attributes, relationships} = task;
     const {name} = attributes;
+    const {id} = relationships.statuses;
+
     const[isProcessing, setProcessing] = useState<boolean>(false);
     const[statuses, setStatuses] = useState<Status[]>([]);
 
@@ -30,13 +32,6 @@ const TaskForm = ({actionFilter, setShowDialog, appendTask, task, setTask}: Task
             setTask({...task, relationships: { statuses: e.target.value}})
         }
     };
-
-    // Clear task during unmounting
-    useEffect(() => {
-        return () => {
-            setTask(taskDefaultValue())
-        }
-    }, []);
 
     // componentDidMount
     useEffect(() => {
@@ -52,6 +47,14 @@ const TaskForm = ({actionFilter, setShowDialog, appendTask, task, setTask}: Task
 
         !actionFilter && fetchStatuses();
     }, []);
+
+    // Clear task during unmounting
+    useEffect(() => {
+        return () => {
+            setTask(taskDefaultValue())
+        }
+    }, []);
+
 
     const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>): void => {
         e.preventDefault();
@@ -102,13 +105,15 @@ const TaskForm = ({actionFilter, setShowDialog, appendTask, task, setTask}: Task
                     disabled={isProcessing}
                 />
                 {
-                    !actionFilter &&
+                    !actionFilter && statuses.length >= 1 &&
                     <Select
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
                         label="Status"
                         fullWidth
-                        input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+                        name="status"
+                        defaultValue={""}
+                        value={id}
                         sx={{mt: 1}}
                     >
                         {
@@ -116,7 +121,7 @@ const TaskForm = ({actionFilter, setShowDialog, appendTask, task, setTask}: Task
                                 return (
                                     <MenuItem
                                         key={id}
-                                        value={statusName}
+                                        value={id}
                                     >
                                         {statusName}
                                     </MenuItem>

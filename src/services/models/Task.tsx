@@ -5,6 +5,7 @@ export type Task = {
     };
     relationships: {
         statuses: {
+            id: string,
             attributes: {
                 statusName: string
             }
@@ -20,6 +21,7 @@ const taskDefaultValue = () => {
         },
         relationships: {
             statuses: {
+                id: "",
                 attributes: {
                     statusName: ""
                 }

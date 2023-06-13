@@ -24,12 +24,20 @@ const TaskForm = ({actionFilter, setShowDialog, appendTask, task, setTask}: Task
 
     const handleFormChange = (e: React.ChangeEvent<HTMLFormElement>): void => {
         e.preventDefault();
-
         // Quick fix
         if (e.target.name === "name") {
             setTask({...task, attributes: { name: e.target.value}})
         } else {
-            setTask({...task, relationships: { statuses: e.target.value}})
+            setTask({
+                ...task,
+                relationships: {
+                    ...task.relationships,
+                    statuses : {
+                        ...task.relationships.statuses,
+                        id: e.target.value
+                    }
+                }
+            })
         }
     };
 
@@ -112,9 +120,9 @@ const TaskForm = ({actionFilter, setShowDialog, appendTask, task, setTask}: Task
                         label="Status"
                         fullWidth
                         name="status"
-                        defaultValue={""}
                         value={id}
                         sx={{mt: 1}}
+                        onChange={handleFormChange}
                     >
                         {
                             statuses.map(({id, attributes: {statusName}} = status) => {

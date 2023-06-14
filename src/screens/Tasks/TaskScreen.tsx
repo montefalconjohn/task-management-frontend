@@ -11,7 +11,7 @@ import Task from "../../services/models/Task";
 
 
 const TaskScreen = (): JSX.Element => {
-    const[tasks, setTasks] = useState({});
+    const[tasks, setTasks] = useState([]);
     const[show, setShowDialog] = useState<boolean>(false);
     const[task, setTask] = useState<Task>(taskDefaultValue());
     const[actionFilter, setActionFilter] = useState<boolean>(false);
@@ -53,6 +53,10 @@ const TaskScreen = (): JSX.Element => {
         setTasks([...tasks, value]);
     };
 
+    const replaceEntry = (val: {[key: string]: any}): void => {
+        setTasks(tasks.map(item => item.id === val.id ? val : item));
+    };
+
     return (
         <Box sx={{
                 display: 'flex',
@@ -69,6 +73,7 @@ const TaskScreen = (): JSX.Element => {
                 show={show}
                 setShowDialog={setShowDialog}
                 actionFilter={actionFilter}
+                replaceEntry={replaceEntry}
                 appendTask={appendTask}
                 task={task}
                 setTask={setTask}

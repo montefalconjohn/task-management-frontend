@@ -10,11 +10,21 @@ type TaskFormType = {
     actionFilter: boolean;
     setShowDialog: Dispatch<React.SetStateAction<boolean>>;
     appendTask: (val: {}) => void;
+    replaceEntry: (val: {}) => void;
     task: Task;
     setTask: Dispatch<React.SetStateAction<Task | null>>;
 }
 
-const TaskForm = ({actionFilter, setShowDialog, appendTask, task, setTask}: TaskFormType): JSX.Element => {
+const TaskForm = (
+    {
+        actionFilter,
+        setShowDialog,
+        replaceEntry,
+        appendTask,
+        task,
+        setTask
+    }: TaskFormType): JSX.Element => {
+
     const {attributes, relationships} = task;
     const {name} = attributes;
     const {id} = relationships.statuses;
@@ -95,9 +105,24 @@ const TaskForm = ({actionFilter, setShowDialog, appendTask, task, setTask}: Task
     };
 
     const patchRequest = async () => {
-        console.log(task)
+        let attributes = {
+            "name": name,
+            "status_id": id,
+        }
+
+        setProcessing(true);
+        try {
+            await axios.patch(`${config.apiBaseUrl}/tasks/${task.id}`, attributes);
+            setProcessing(false);
+            setShowDialog(false);
+            replaceEntry(task);
+        } catch (err) {
+            console.log(err)
+            throw err;
+        }
     };
 
+    const label = actionFilter ? "Add" : "Edit";
     return (
         <DialogContent noValidate sx={{mt: 1}}>
             <Box component="form" onSubmit={handleSubmit} onChange={handleFormChange}>
@@ -139,7 +164,7 @@ const TaskForm = ({actionFilter, setShowDialog, appendTask, task, setTask}: Task
                     </Select>
                 }
                 <Button type="submit" fullWidth variant="contained" sx={{mt: 3, mb: 2}} disabled={isProcessing}>
-                    Add Task
+                    {label} Task
                 </Button>
             </Box>
         </DialogContent>

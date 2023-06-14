@@ -53,6 +53,7 @@ const TaskScreen = (): JSX.Element => {
         setTasks(tasks.filter(item => item.id !== id));
     }
 
+    // On Delete task button
     const onDeleteTask = async task => {
         const {id} = task;
         try {
@@ -71,7 +72,6 @@ const TaskScreen = (): JSX.Element => {
 
     // Replace/Update task
     const replaceTask = (val: keyable): void => {
-        console.log(val.id)
         setTasks(tasks.map(item => item.id === val.id ? val : item));
     };
 

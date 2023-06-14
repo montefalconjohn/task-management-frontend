@@ -36,20 +36,30 @@ const TaskForm = (
         e.preventDefault();
         // Quick fix
         if (e.target.name === "name") {
-            setTask({...task, attributes: { name: e.target.value}})
+            updateName(e.target.value);
         } else {
-            setTask({
-                ...task,
-                relationships: {
-                    ...task.relationships,
-                    statuses : {
-                        ...task.relationships.statuses,
-                        id: e.target.value
-                    }
-                }
-            })
+            updateRelationship(e.target.value);
         }
     };
+
+    // Update name function
+    const updateName = (value: string): void => {
+        setTask({...task, attributes: { name: value}})
+    };
+
+    // Update status relationship function
+    const updateRelationship = (value: string): void => {
+        setTask({
+            ...task,
+            relationships: {
+                ...task.relationships,
+                statuses : {
+                    ...task.relationships.statuses,
+                    id: value
+                }
+            }
+        })
+    }
 
     // componentDidMount
     useEffect(() => {

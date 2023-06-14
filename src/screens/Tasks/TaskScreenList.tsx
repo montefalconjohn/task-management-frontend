@@ -3,11 +3,12 @@ import * as React from 'react';
 import {Grid, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import {Task} from "../../services/models/Task";
 
 type TravelIndexProp = {
     tasks: {}[];
-    onEditClick: (item: {}) => void;
-    onDeleteClick: () => void;
+    onEditClick: (item: Task) => void;
+    onDeleteClick: (item: Task) => void;
 }
 
 const displayTasks = ({tasks, onEditClick, onDeleteClick}: TravelIndexProp): JSX.Element => {
@@ -38,7 +39,7 @@ const displayTasks = ({tasks, onEditClick, onDeleteClick}: TravelIndexProp): JSX
                                                             </IconButton>
                                                         </TableCell>
                                                         <TableCell>
-                                                            <IconButton aria-label="edit" onClick={onDeleteClick}>
+                                                            <IconButton aria-label="edit" onClick={() => onDeleteClick(item)}>
                                                                 <DeleteForeverIcon color="error"/>
                                                             </IconButton>
                                                         </TableCell>

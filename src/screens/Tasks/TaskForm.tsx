@@ -9,8 +9,8 @@ import statusDefaultValue, {Status} from "../../services/models/Status";
 type TaskFormType = {
     actionFilter: boolean;
     setShowDialog: Dispatch<React.SetStateAction<boolean>>;
-    appendTask: (val: {}) => void;
-    replaceEntry: (val: {}) => void;
+    appendTask: (val: Task) => void;
+    replaceTask: (val: Task) => void;
     task: Task;
     setTask: Dispatch<React.SetStateAction<Task | null>>;
 }
@@ -19,7 +19,7 @@ const TaskForm = (
     {
         actionFilter,
         setShowDialog,
-        replaceEntry,
+        replaceTask,
         appendTask,
         task,
         setTask
@@ -115,7 +115,7 @@ const TaskForm = (
             await axios.patch(`${config.apiBaseUrl}/tasks/${task.id}`, attributes);
             setProcessing(false);
             setShowDialog(false);
-            replaceEntry(task);
+            replaceTask(task);
         } catch (err) {
             console.log(err)
             throw err;

@@ -9,6 +9,9 @@ import TaskDialog from "./TaskDialog";
 import taskDefaultValue from "../../services/models/Task";
 import Task from "../../services/models/Task";
 
+interface keyable {
+    [key: string]: any
+}
 
 const TaskScreen = (): JSX.Element => {
     const[tasks, setTasks] = useState([]);
@@ -45,15 +48,30 @@ const TaskScreen = (): JSX.Element => {
         setActionFilter(false);
     }
 
-    const onDeleteClick = (): void => {
-
+    // Delete task
+    const deleteTask = (id: string): void => {
+        setTasks(tasks.filter(item => item.id !== id));
     }
 
+    const onDeleteTask = async task => {
+        const {id} = task;
+        try {
+            await axios.delete(`${config.apiBaseUrl}/tasks/${id}`);
+            deleteTask(id)
+        } catch (err) {
+            console.log(err);
+            throw err;
+        }
+    };
+
+    // Add new task
     const appendTask = (value: {}): void => {
         setTasks([...tasks, value]);
     };
 
-    const replaceEntry = (val: {[key: string]: any}): void => {
+    // Replace/Update task
+    const replaceTask = (val: keyable): void => {
+        console.log(val.id)
         setTasks(tasks.map(item => item.id === val.id ? val : item));
     };
 
@@ -68,12 +86,12 @@ const TaskScreen = (): JSX.Element => {
             <IconButton aria-label="add" onClick={onAddClick}>
                 <AddCircleRoundedIcon color="primary"/>
             </IconButton>
-            <TaskScreenList tasks={tasks} onDeleteClick={onDeleteClick} onEditClick={onEditClick}/>
+            <TaskScreenList tasks={tasks} onDeleteClick={onDeleteTask} onEditClick={onEditClick}/>
             <TaskDialog
                 show={show}
                 setShowDialog={setShowDialog}
                 actionFilter={actionFilter}
-                replaceEntry={replaceEntry}
+                replaceTask={replaceTask}
                 appendTask={appendTask}
                 task={task}
                 setTask={setTask}

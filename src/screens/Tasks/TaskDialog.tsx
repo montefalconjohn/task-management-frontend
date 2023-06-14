@@ -8,9 +8,9 @@ type TaskDialogProps = {
     show: boolean;
     setShowDialog: Dispatch<React.SetStateAction<boolean>>;
     actionFilter: boolean;
-    appendTask: (val: {}) => void;
-    replaceEntry: (val: {}) => void;
     task: Task;
+    appendTask: (val: {}) => void;
+    replaceTask: (val: {}) => void;
     setTask: Dispatch<React.SetStateAction<Task | null>>;
 }
 
@@ -19,7 +19,7 @@ const TaskDialog = (
         show,
         setShowDialog,
         actionFilter,
-        replaceEntry,
+        replaceTask,
         appendTask,
         task,
         setTask
@@ -33,10 +33,10 @@ const TaskDialog = (
             <TaskForm
                 actionFilter={actionFilter}
                 setShowDialog={setShowDialog}
-                replaceEntry={replaceEntry}
+                task={task}
+                replaceTask={replaceTask}
                 appendTask={appendTask}
                 setTask={setTask}
-                task={task}
             />
         </Dialog>
     );

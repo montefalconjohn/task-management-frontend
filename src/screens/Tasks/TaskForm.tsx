@@ -4,7 +4,7 @@ import {Dispatch, useEffect, useState} from "react";
 import axios from "axios";
 import {config} from "../../config";
 import taskDefaultValue, {Task} from "../../services/models/Task";
-import statusDefaultValue, {Status} from "../../services/models/Status";
+import {Status} from "../../services/models/Status";
 
 type TaskFormType = {
     actionFilter: boolean;
@@ -83,7 +83,7 @@ const TaskForm = (
         }
     }, []);
 
-
+    // Handle submit click
     const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>): void => {
         e.preventDefault();
 
@@ -95,6 +95,7 @@ const TaskForm = (
         }
     };
 
+    // Post request
     const postRequest = async () => {
         const request = {
             name: name,
@@ -114,6 +115,7 @@ const TaskForm = (
         }
     };
 
+    // patch request
     const patchRequest = async () => {
         let attributes = {
             "name": name,
@@ -132,7 +134,9 @@ const TaskForm = (
         }
     };
 
+    // Dynamic label for button
     const label = actionFilter ? "Add" : "Edit";
+
     return (
         <DialogContent noValidate sx={{mt: 1}}>
             <Box component="form" onSubmit={handleSubmit} onChange={handleFormChange}>

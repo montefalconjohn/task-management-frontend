@@ -33,6 +33,7 @@ const TaskScreen = (): JSX.Element => {
         fetchTasks();
     }, []);
 
+    // On Add click
     const onAddClick = (): void => {
         setShowDialog(true);
 
@@ -40,6 +41,7 @@ const TaskScreen = (): JSX.Element => {
         setActionFilter(true);
     };
 
+    // On Edit Click
     const onEditClick = (task: Task): void => {
         setTask(task);
         setShowDialog(true);

@@ -26,7 +26,10 @@ const TaskDialog = (
     }
     : TaskDialogProps
 ): JSX.Element => {
+
+    // Dynamic label for dialog title
     let action = actionFilter ? "Add" : "Edit";
+
     return (
         <Dialog open={show} onClose={() => setShowDialog(false)} fullWidth>
             <DialogTitle>{action} Task</DialogTitle>

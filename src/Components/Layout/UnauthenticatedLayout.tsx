@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Container} from "@mui/material";
 import {Navigate, Outlet} from "react-router-dom";
 
-const UnauthenticatedLayout = () => {
+const UnauthenticatedLayout = (): JSX.Element => {
     // TODO:: Check if the user is logged in. If loggedIn, redirect to protected route
     return <Navigate to="/tasks"/>
     return (

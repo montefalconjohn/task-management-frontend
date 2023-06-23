@@ -1,7 +1,18 @@
 import * as React from 'react';
-import {Box, Button, Container, createTheme, CssBaseline, TextField, ThemeProvider, Typography} from "@mui/material";
+import CssBaseline from "@mui/material/CssBaseline";
+import {
+    Box,
+    Button,
+    Container,
+    TextField,
+    Typography,
+    ThemeProvider,
+    createTheme
+} from "@mui/material";
 
-const theme = createTheme();
+const theme = createTheme({
+    direction: 'rtl'
+});
 
 const Login = () => {
     return (

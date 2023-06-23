@@ -2,11 +2,8 @@
 import * as React from 'react';
 
 const TrashScreen = () => {
-    // TODO:: Create trash screen
     return (
-        <div>
-
-        </div>
+        <h1>Trash</h1>
     );
 };
 

@@ -21,8 +21,12 @@ const TaskContainer = (): JSX.Element => {
                         <Tab label="Trash" value="2" />
                     </TabList>
                 </Box>
-                <TabPanel value="1"><TaskScreen/></TabPanel>
-                <TabPanel value="2"><TrashScreen/></TabPanel>
+                <TabPanel value="1">
+                    <TaskScreen/>
+                </TabPanel>
+                <TabPanel value="2">
+                    <TrashScreen/>
+                </TabPanel>
             </TabContext>
         </Box>
     );

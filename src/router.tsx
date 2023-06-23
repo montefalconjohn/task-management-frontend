@@ -2,7 +2,7 @@ import {createBrowserRouter} from "react-router-dom";
 import ProtectedLayout from "./Components/Layout/ProtectedLayout";
 import UnauthenticatedLayout from "./Components/Layout/UnauthenticatedLayout";
 import Login from "./screens/Login/Login";
-import TaskScreen from "./screens/Tasks/TaskScreen";
+import TaskContainer from "./Components/TaskContainer/TaskContainer";
 
 const router = createBrowserRouter([
     {
@@ -11,7 +11,7 @@ const router = createBrowserRouter([
         children: [
             {
                 path: '/tasks',
-                element: <TaskScreen/>
+                element: <TaskContainer/>
             }
         ]
     },

@@ -2,7 +2,7 @@ import * as React from 'react';
 import TaskScreenList from "./TaskScreenList";
 import {useEffect, useState} from "react";
 import axios from "axios";
-import {Box, IconButton, TextField} from "@mui/material";
+import {Box, IconButton, Stack, TextField} from "@mui/material";
 import {config} from "../../config";
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import TaskDialog from "./TaskDialog";
@@ -86,10 +86,12 @@ const TaskScreen = (): JSX.Element => {
                 alignItems: 'center',
                 flexDirection: 'column'
             }}>
-            <h2>Task List</h2>
-            <IconButton aria-label="add" onClick={onAddClick} sx={{verticalAlign: "middle"}}>
-                <AddCircleRoundedIcon color="primary"/>
-            </IconButton>
+            <Stack direction="row" spacing={2}>
+                <h2>Task List</h2>
+                <IconButton aria-label="add" onClick={onAddClick} sx={{verticalAlign: "middle"}}>
+                    <AddCircleRoundedIcon color="primary"/>
+                </IconButton>
+            </Stack>
             <TextField
                 margin="normal"
                 required

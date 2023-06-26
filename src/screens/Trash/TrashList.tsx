@@ -1,8 +1,8 @@
 import * as React from 'react';
 import {Task} from "../../services/models/Task";
 import {IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import RestoreIcon from '@mui/icons-material/Restore';
 
 type TrashListProp = {
     tasks: {}[];
@@ -24,7 +24,7 @@ export const DisplayList = ({tasks, onRestoreClick, onDeleteClick}: TrashListPro
                         </TableHead>
                         <TableBody>
                             {
-                                tasks.length >= 1 && tasks.map((item: Task, index) => {
+                                tasks.length >= 1 && tasks.map((item: Task) => {
                                         return (
                                             <TableRow key={item.id}>
                                                 <>
@@ -34,7 +34,7 @@ export const DisplayList = ({tasks, onRestoreClick, onDeleteClick}: TrashListPro
                                                     <TableCell>
                                                         <IconButton aria-label="edit" onClick={() => onRestoreClick(item)}
                                                                     sx={{align: "right"}}>
-                                                            <EditIcon color="success"/>
+                                                            <RestoreIcon color="success"/>
                                                         </IconButton>
                                                     </TableCell>
                                                     <TableCell>

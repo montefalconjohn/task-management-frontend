@@ -22,13 +22,34 @@ const TrashScreen = (): JSX.Element => {
         fetchTasks();
     }, []);
 
-    const onRestoreClick = () => {
-        console.log('Restore');
+    // On Restore task click
+    const onRestoreClick = async task => {
+        const {id} = task;
+        try {
+            await axios.patch(`${config.apiBaseUrl}/trash-tasks/${id}`);
+            updateTrashTaskList(id);
+        } catch (err) {
+            console.log(err);
+            throw err;
+        }
     };
 
-    const onDeleteClick = () => {
-        console.log('Delete');
+    // On Delete task click
+    const onDeleteClick = async task => {
+        const {id} = task;
+        try {
+            await axios.delete(`${config.apiBaseUrl}/trash-tasks/${id}`);
+            updateTrashTaskList(id);
+        } catch (err) {
+            console.log(err);
+            throw err;
+        }
     };
+
+    // Update trash task list for restore and delete
+    const updateTrashTaskList = (id: string): void => {
+        setTasks(trashTasks.filter(item => item.id !== id));
+    }
 
     return (
         <Box sx={{

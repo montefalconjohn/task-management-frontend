@@ -2,12 +2,13 @@ import * as React from 'react';
 import TaskScreenList from "./TaskScreenList";
 import {useEffect, useState} from "react";
 import axios from "axios";
-import {Box, IconButton} from "@mui/material";
+import {Box, IconButton, TextField} from "@mui/material";
 import {config} from "../../config";
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import TaskDialog from "./TaskDialog";
 import taskDefaultValue from "../../services/models/Task";
 import Task from "../../services/models/Task";
+import SearchIcon from '@mui/icons-material/Search';
 
 interface keyable {
     [key: string]: any
@@ -18,11 +19,12 @@ const TaskScreen = (): JSX.Element => {
     const[show, setShowDialog] = useState<boolean>(false);
     const[task, setTask] = useState<Task>(taskDefaultValue());
     const[actionFilter, setActionFilter] = useState<boolean>(false);
+    const[searchParameter, setSearchParameter] = useState<string>("all");
 
     useEffect(() => {
         const fetchTasks = async () => {
             try {
-                const document = await axios.get(`${config.apiBaseUrl}/tasks`);
+                const document = await axios.get(`${config.apiBaseUrl}/tasks/search/search=${searchParameter}`);
                 const {data} = document;
                 setTasks(data.data)
             } catch (err: any) {
@@ -31,7 +33,7 @@ const TaskScreen = (): JSX.Element => {
         };
 
         fetchTasks();
-    }, []);
+    }, [searchParameter]);
 
     // On Add click
     const onAddClick = (): void => {
@@ -85,9 +87,18 @@ const TaskScreen = (): JSX.Element => {
                 flexDirection: 'column'
             }}>
             <h2>Task List</h2>
-            <IconButton aria-label="add" onClick={onAddClick}>
+            <IconButton aria-label="add" onClick={onAddClick} sx={{verticalAlign: "middle"}}>
                 <AddCircleRoundedIcon color="primary"/>
             </IconButton>
+            <TextField
+                margin="normal"
+                required
+                id="searchParameter"
+                label="Search parameter..."
+                sx={{width: '100%'}}
+                autoFocus
+                onChange={(event) => setSearchParameter(event.target.value)}
+            />
             <TaskScreenList tasks={tasks} onDeleteClick={onDeleteTask} onEditClick={onEditClick}/>
             <TaskDialog
                 show={show}

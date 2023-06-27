@@ -129,6 +129,7 @@ const TaskForm = (
             setShowDialog(false);
             replaceTask(task);
         } catch (err) {
+            setProcessing(false);
             console.log(err)
             throw err;
         }

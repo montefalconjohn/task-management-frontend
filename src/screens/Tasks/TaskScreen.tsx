@@ -1,5 +1,4 @@
 import * as React from 'react';
-import TaskScreenList from "./TaskScreenList";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {Box, IconButton, Stack, TextField} from "@mui/material";
@@ -8,7 +7,7 @@ import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import TaskDialog from "./TaskDialog";
 import taskDefaultValue from "../../services/models/Task";
 import Task from "../../services/models/Task";
-import SearchIcon from '@mui/icons-material/Search';
+import ListItem from "../../Components/ListItem/ListItem";
 
 interface keyable {
     [key: string]: any
@@ -101,7 +100,7 @@ const TaskScreen = (): JSX.Element => {
                 autoFocus
                 onChange={(event) => setSearchParameter(event.target.value)}
             />
-            <TaskScreenList tasks={tasks} onDeleteClick={onDeleteTask} onEditClick={onEditClick}/>
+            <ListItem tasks={tasks} onEditClick={onEditClick} onDeleteClick={onDeleteTask} isTrash={false}/>
             <TaskDialog
                 show={show}
                 setShowDialog={setShowDialog}

@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import {config} from "../../config";
 import {Box} from "@mui/material";
-import TrashList from "./TrashList";
+import ListItem from "../../Components/ListItem/ListItem";
 
 const TrashScreen = (): JSX.Element => {
     const[trashTasks, setTasks] = useState([]);
@@ -59,7 +59,7 @@ const TrashScreen = (): JSX.Element => {
             flexDirection: 'column'
         }}>
             <h2>Trash List</h2>
-            <TrashList tasks={trashTasks} onRestoreClick={onRestoreClick} onDeleteClick={onDeleteClick}/>
+            <ListItem tasks={trashTasks} onEditClick={onRestoreClick} onDeleteClick={onDeleteClick} isTrash={true}/>
         </Box>
     );
 };

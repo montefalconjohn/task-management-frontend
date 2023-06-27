@@ -7,7 +7,8 @@ export type Task = {
         statuses: {
             id: string,
             attributes: {
-                statusName: string
+                statusName: string,
+                createdBy: string
             }
         }
     };

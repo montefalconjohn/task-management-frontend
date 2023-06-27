@@ -4,6 +4,7 @@ import {IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHea
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import RestoreIcon from "@mui/icons-material/Restore";
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 type ListItemProps = {
     tasks: {}[],
@@ -19,7 +20,11 @@ const TableHeader = (): JSX.Element => {
                 <TableHead>
                     <TableRow>
                         <TableCell>Task</TableCell>
-                        <TableCell colSpan={3}>Status</TableCell>
+                        <TableCell>Status</TableCell>
+                        <TableCell colSpan={3}>
+                            Date Created
+                            <ArrowDropDownIcon/>
+                        </TableCell>
                     </TableRow>
                 </TableHead>
             }
@@ -38,8 +43,8 @@ const Body = ({tasks, onEditClick, onDeleteClick, isTrash}: ListItemProps): JSX.
                                 <TableRow key={item.id}>
                                     <>
                                         <TableCell>{item.attributes.name}</TableCell>
-                                        <TableCell
-                                        >{item.relationships.statuses.attributes.statusName}</TableCell>
+                                        <TableCell>{item.relationships.statuses.attributes.statusName}</TableCell>
+                                        <TableCell>{item.relationships.statuses.attributes.statusName}</TableCell>
                                         <TableCell>
                                             <IconButton aria-label="edit" onClick={() => onEditClick(item)}
                                                         sx={{align: "right"}}>

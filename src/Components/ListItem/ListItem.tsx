@@ -5,6 +5,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import RestoreIcon from "@mui/icons-material/Restore";
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import moment from 'moment'
 
 type ListItemProps = {
     tasks: {}[],
@@ -39,12 +40,13 @@ const Body = ({tasks, onEditClick, onDeleteClick, isTrash}: ListItemProps): JSX.
             <TableBody>
                 {
                     tasks.length >= 1 && tasks.map((item: Task) => {
+                        console.log(typeof moment(item.attributes.createdBy, 'MMM Y'))
                             return (
                                 <TableRow key={item.id}>
                                     <>
                                         <TableCell>{item.attributes.name}</TableCell>
                                         <TableCell>{item.relationships.statuses.attributes.statusName}</TableCell>
-                                        <TableCell>{item.relationships.statuses.attributes.statusName}</TableCell>
+                                        {/*<TableCell>{item.attributes.createdBy?.format('MMM Y')}</TableCell>*/}
                                         <TableCell>
                                             <IconButton aria-label="edit" onClick={() => onEditClick(item)}
                                                         sx={{align: "right"}}>

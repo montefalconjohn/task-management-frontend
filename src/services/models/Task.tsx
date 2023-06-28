@@ -1,14 +1,14 @@
 export type Task = {
     id: string;
     attributes: {
-        name: string
+        name: string,
+        createdBy: any
     };
     relationships: {
         statuses: {
             id: string,
             attributes: {
-                statusName: string,
-                createdBy: string
+                statusName: string
             }
         }
     };

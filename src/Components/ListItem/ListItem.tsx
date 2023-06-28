@@ -40,13 +40,13 @@ const Body = ({tasks, onEditClick, onDeleteClick, isTrash}: ListItemProps): JSX.
             <TableBody>
                 {
                     tasks.length >= 1 && tasks.map((item: Task) => {
-                        console.log(typeof moment(item.attributes.createdBy, 'MMM Y'))
+                        const date = moment(item.attributes.createdBy, 'Y-MM-DD 00:00:00');
                             return (
                                 <TableRow key={item.id}>
                                     <>
                                         <TableCell>{item.attributes.name}</TableCell>
                                         <TableCell>{item.relationships.statuses.attributes.statusName}</TableCell>
-                                        {/*<TableCell>{item.attributes.createdBy?.format('MMM Y')}</TableCell>*/}
+                                        <TableCell>{date.format('LL')}</TableCell>
                                         <TableCell>
                                             <IconButton aria-label="edit" onClick={() => onEditClick(item)}
                                                         sx={{align: "right"}}>

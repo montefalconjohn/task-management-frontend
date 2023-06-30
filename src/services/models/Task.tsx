@@ -1,4 +1,4 @@
-export type Task = {
+export interface Task {
     id: string;
     attributes: {
         name: string,

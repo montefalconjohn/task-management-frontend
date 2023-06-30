@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Task} from "../../services/models/Task";
-import {IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
+import {Icon, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import RestoreIcon from "@mui/icons-material/Restore";
@@ -24,7 +24,9 @@ const TableHeader = (): JSX.Element => {
                         <TableCell>Status</TableCell>
                         <TableCell colSpan={3}>
                             Date Created
-                            <ArrowDropDownIcon/>
+                            <IconButton onClick={() => console.log('here')}>
+                                <ArrowDropDownIcon/>
+                            </IconButton>
                         </TableCell>
                     </TableRow>
                 </TableHead>

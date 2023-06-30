@@ -78,6 +78,14 @@ const TaskScreen = (): JSX.Element => {
         setTasks(tasks.map(item => item.id === val.id ? val : item));
     };
 
+    const sortList = (tasks: {}[]) => {
+        return tasks.sort(function(a: keyable,b: keyable){
+            return new Date(a.attributes.createdBy) - new Date(b.plantingDate)
+        })
+    }
+
+    let sorted = sortList(tasks);
+    console.log(sorted)
     return (
         <Box sx={{
                 display: 'flex',

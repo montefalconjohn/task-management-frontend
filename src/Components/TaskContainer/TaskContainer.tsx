@@ -6,7 +6,8 @@ import TaskScreen from "../../screens/Tasks/TaskScreen";
 import TrashScreen from "../../screens/Trash/TrashScreen";
 
 type TabListsProps = {
-    handleChange: (event: React.SyntheticEvent, newValue: string) => void
+    handleChange: (event: React.SyntheticEvent, newValue: string) => void,
+    name: string
 };
 
 // Tab Panels
@@ -45,7 +46,7 @@ const TaskContainer = (): JSX.Element => {
         <Box sx={{ width: '100%', typography: 'body1' }}>
             <TabContext value={value}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                    <TabLists handleChange={handleChange}/>
+                    <TabLists handleChange={handleChange} name={false}/>
                 </Box>
                 <TabPanels/>
             </TabContext>

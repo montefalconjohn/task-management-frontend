@@ -2,7 +2,7 @@ export interface Task {
     id: string;
     attributes: {
         name: string,
-        createdBy: any
+        createdBy: Date
     };
     relationships: {
         statuses: {

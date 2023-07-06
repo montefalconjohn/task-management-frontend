@@ -23,7 +23,8 @@ const TaskForm = (
         appendTask,
         task,
         setTask
-    }: TaskFormType): JSX.Element => {
+    }: TaskFormType
+): JSX.Element => {
 
     const {attributes, relationships} = task;
     const {name} = attributes;
@@ -44,7 +45,13 @@ const TaskForm = (
 
     // Update name function
     const updateName = (value: string): void => {
-        setTask({...task, attributes: { name: value}})
+        setTask({
+            ...task,
+            attributes: {
+                ...task.attributes,
+                name: value
+            }
+        })
     };
 
     // Update status relationship function

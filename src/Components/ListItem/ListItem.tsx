@@ -23,7 +23,7 @@ type ListItemProps = {
     isTrash: boolean;
 };
 
-type TableRoItemComponentProps = {
+type TableRowItemComponentProps = {
     task: Task,
     onEditClick: (item: Task) => void;
     onDeleteClick: (item: Task) => void;
@@ -75,7 +75,7 @@ const Body = ({tasks, onEditClick, onDeleteClick, isTrash}: ListItemProps): JSX.
 };
 
 // TableRowItemComponent
-const TableRowItemComponent = ({task, onEditClick, onDeleteClick, isTrash}: TableRoItemComponentProps) => {
+const TableRowItemComponent = ({task, onEditClick, onDeleteClick, isTrash}: TableRowItemComponentProps) => {
     const date = moment(task.attributes.createdBy, 'Y-MM-DD 00:00:00');
     return (
         <TableRow>

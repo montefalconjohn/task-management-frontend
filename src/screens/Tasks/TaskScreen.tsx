@@ -14,12 +14,13 @@ interface keyable {
 }
 
 const TaskScreen = (): JSX.Element => {
-    const[tasks, setTasks] = useState([]);
+    const[tasks, setTasks] = useState<Task[]>([]);
     const[show, setShowDialog] = useState<boolean>(false);
     const[task, setTask] = useState<Task>(taskDefaultValue());
     const[actionFilter, setActionFilter] = useState<boolean>(false);
     const[searchParameter, setSearchParameter] = useState<string>("all");
 
+    // componentDidUpdate
     useEffect(() => {
         const fetchTasks = async () => {
             try {
@@ -69,23 +70,22 @@ const TaskScreen = (): JSX.Element => {
     };
 
     // Add new task
-    const appendTask = (value: {}): void => {
-        setTasks([...tasks, value]);
+    const appendTask = (task: Task): void => {
+        setTasks([...tasks, task]);
     };
 
     // Replace/Update task
-    const replaceTask = (val: keyable): void => {
-        setTasks(tasks.map(item => item.id === val.id ? val : item));
+    const replaceTask = (task: Task): void => {
+        setTasks(tasks.map(item => item.id === task.id ? task : item));
     };
 
-    const sortList = (tasks: {}[]) => {
+    const sortList = (tasks: Task[]) => {
         return tasks.sort(function(a: keyable,b: keyable){
             return new Date(a.attributes.createdBy) - new Date(b.plantingDate)
         })
     }
 
     let sorted = sortList(tasks);
-    console.log(sorted)
     return (
         <Box sx={{
                 display: 'flex',

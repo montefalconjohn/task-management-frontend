@@ -1,6 +1,15 @@
 import * as React from 'react';
 import {Task} from "../../services/models/Task";
-import {Icon, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
+import {
+    IconButton,
+    Paper,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow
+} from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import RestoreIcon from "@mui/icons-material/Restore";
@@ -8,12 +17,20 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import moment from 'moment'
 
 type ListItemProps = {
-    tasks: {}[],
+    tasks: Task[],
     onEditClick: (item: Task) => void;
     onDeleteClick: (item: Task) => void;
     isTrash: boolean;
 };
 
+type TableRoItemComponentProps = {
+    task: Task,
+    onEditClick: (item: Task) => void;
+    onDeleteClick: (item: Task) => void;
+    isTrash: boolean;
+};
+
+// TableHeader
 const TableHeader = (): JSX.Element => {
     return (
         <>
@@ -42,29 +59,13 @@ const Body = ({tasks, onEditClick, onDeleteClick, isTrash}: ListItemProps): JSX.
             <TableBody>
                 {
                     tasks.length >= 1 && tasks.map((item: Task) => {
-                        const date = moment(item.attributes.createdBy, 'Y-MM-DD 00:00:00');
-                            return (
-                                <TableRow key={item.id}>
-                                    <>
-                                        <TableCell>{item.attributes.name}</TableCell>
-                                        <TableCell>{item.relationships.statuses.attributes.statusName}</TableCell>
-                                        <TableCell>{date.format('LL')}</TableCell>
-                                        <TableCell>
-                                            <IconButton aria-label="edit" onClick={() => onEditClick(item)}
-                                                        sx={{align: "right"}}>
-                                                {
-                                                    !isTrash ? <EditIcon color="success"/> : <RestoreIcon color="success"/>
-                                                }
-                                            </IconButton>
-                                        </TableCell>
-                                        <TableCell>
-                                            <IconButton aria-label="edit" onClick={() => onDeleteClick(item)}>
-                                                <DeleteForeverIcon color="error"/>
-                                            </IconButton>
-                                        </TableCell>
-                                    </>
-                                </TableRow>
-                            )
+                           return <TableRowItemComponent
+                               task={item}
+                               onEditClick={onEditClick}
+                               onDeleteClick={onDeleteClick}
+                               isTrash={isTrash}
+                               key={item.id}
+                           />
                         }
                     )
                 }
@@ -73,6 +74,34 @@ const Body = ({tasks, onEditClick, onDeleteClick, isTrash}: ListItemProps): JSX.
     )
 };
 
+// TableRowItemComponent
+const TableRowItemComponent = ({task, onEditClick, onDeleteClick, isTrash}: TableRoItemComponentProps) => {
+    const date = moment(task.attributes.createdBy, 'Y-MM-DD 00:00:00');
+    return (
+        <TableRow>
+            <>
+                <TableCell>{task.attributes.name}</TableCell>
+                <TableCell>{task.relationships.statuses.attributes.statusName}</TableCell>
+                <TableCell>{date.format('LL')}</TableCell>
+                <TableCell>
+                    <IconButton aria-label="edit" onClick={() => onEditClick(task)}
+                                sx={{align: "right"}}>
+                        {
+                            !isTrash ? <EditIcon color="success"/> : <RestoreIcon color="success"/>
+                        }
+                    </IconButton>
+                </TableCell>
+                <TableCell>
+                    <IconButton aria-label="edit" onClick={() => onDeleteClick(task)}>
+                        <DeleteForeverIcon color="error"/>
+                    </IconButton>
+                </TableCell>
+            </>
+        </TableRow>
+    )
+};
+
+// Display Tasks
 const DisplayTasks = ({tasks, onEditClick, onDeleteClick, isTrash}: ListItemProps): JSX.Element => {
         return (
           <>
@@ -88,6 +117,7 @@ const DisplayTasks = ({tasks, onEditClick, onDeleteClick, isTrash}: ListItemProp
         );
 };
 
+// List Item
 const ListItem = ({tasks, onEditClick, onDeleteClick, isTrash}: ListItemProps): JSX.Element => {
     return (
         <>

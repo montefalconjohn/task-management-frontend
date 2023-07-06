@@ -9,8 +9,8 @@ type TaskDialogProps = {
     setShowDialog: Dispatch<React.SetStateAction<boolean>>;
     actionFilter: boolean;
     task: Task;
-    appendTask: (val: {}) => void;
-    replaceTask: (val: {}) => void;
+    appendTask: (val: Task) => void;
+    replaceTask: (val: Task) => void;
     setTask: Dispatch<React.SetStateAction<Task | null>>;
 }
 

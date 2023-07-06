@@ -4,9 +4,10 @@ import axios from "axios";
 import {config} from "../../config";
 import {Box} from "@mui/material";
 import ListItem from "../../Components/ListItem/ListItem";
+import {Task} from "../../services/models/Task";
 
 const TrashScreen = (): JSX.Element => {
-    const[trashTasks, setTasks] = useState([]);
+    const[trashTasks, setTasks] = useState<Task[]>([]);
 
     useEffect(() => {
         const fetchTasks = async () => {
@@ -59,7 +60,12 @@ const TrashScreen = (): JSX.Element => {
             flexDirection: 'column'
         }}>
             <h2>Trash List</h2>
-            <ListItem tasks={trashTasks} onEditClick={onRestoreClick} onDeleteClick={onDeleteClick} isTrash={true}/>
+            <ListItem
+                tasks={trashTasks}
+                onEditClick={onRestoreClick}
+                onDeleteClick={onDeleteClick}
+                isTrash={true}
+            />
         </Box>
     );
 };

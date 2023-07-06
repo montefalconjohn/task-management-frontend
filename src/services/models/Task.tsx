@@ -18,7 +18,8 @@ const taskDefaultValue = () => {
     return {
         id: "",
         attributes: {
-            name: ""
+            name: "",
+            createdBy: ""
         },
         relationships: {
             statuses: {
